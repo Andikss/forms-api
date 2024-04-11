@@ -25,13 +25,11 @@ class AuthRepository implements AuthRepositoryInterface
             $credentials = $request->only(['email', 'password']);
 
             if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-
                 $user  = Auth::user();
                 $token = $this->getToken($user);
 
                 return [
-                    'data' => $user,
+                    'user'  => $user,
                     'token' => $token,
                 ];
             }
@@ -54,9 +52,9 @@ class AuthRepository implements AuthRepositoryInterface
     public function logout(Request $request): void
     {
         try {
-            Auth::logout();
+            $request->user()->currentAccessToken()->delete();
         } catch (Exception $error) {
-            throw new Exception('Error while logging out : ' . $error->getMessage());
+            throw new Exception('Error while logging out: ' . $error->getMessage());
         }
     }
 
