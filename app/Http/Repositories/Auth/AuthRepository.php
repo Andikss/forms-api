@@ -11,14 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    /**
-     * Handles user login
-     * 
-     * @param LoginRequest $request
-     * @return array
-     * @throws Exception
-     * @throws AuthenticationException
-     */
     public function login(LoginRequest $request): array
     {
         try {
@@ -42,13 +34,6 @@ class AuthRepository implements AuthRepositoryInterface
         }
     }
 
-
-    /**
-     * Logs out the currently authenticated user
-     * 
-     * @param Request $request
-     * @throws Exception
-     */
     public function logout(Request $request): void
     {
         try {
