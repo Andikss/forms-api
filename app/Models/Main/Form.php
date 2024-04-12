@@ -5,6 +5,7 @@ namespace App\Models\Main;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -40,5 +41,14 @@ class Form extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creator_id', 'id');
+    }
+
+    public static function getFormByColumn(string $key, string|int $value): ?Form {
+        $form = self::where($key, $value)->first();
+        if (!$form) {
+            throw new ModelNotFoundException("Form not found");
+        }
+    
+        return $form;
     }
 }
