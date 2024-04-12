@@ -21,9 +21,9 @@ Route::prefix('v1')->group(function () {
         Route::post('/', [FormController::class, 'store'])->name('forms.store');
 
         # Question Endpoints
-        Route::prefix('{form_slug}/question')->group(function () {
+        Route::prefix('{form_slug}/questions')->group(function () {
             Route::post('/', [QuestionController::class, 'store'])->name('forms.question.store');
-            Route::delete('/{question_id}', [QuestionController::class, 'store'])->name('forms.question.delete');
+            Route::delete('/{question_id}', [QuestionController::class, 'delete'])->name('forms.question.delete');
         });
 
         # Response Endpoints
