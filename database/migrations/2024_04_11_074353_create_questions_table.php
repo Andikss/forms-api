@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('form_id')->constrained('forms')->cascadeOnDelete();
             $table->string('name');
             $table->enum('choice_type', ['short_answer', 'paragraph', 'date', 'time', 'multiple choice', 'dropdown', 'checkboxes']);
-            $table->string('choices');
+            $table->string('choices')->nullable();
             $table->boolean('is_required');
             $table->timestamps();
         });
