@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\ExceptionHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Auth\AuthRepository;
 use App\Http\Requests\Auth\LoginRequest;
@@ -38,10 +39,7 @@ class AuthController extends Controller
                 'accessToken' => $login['token']
             ], 200);
         } catch (Exception $error) {
-            return response()->json([
-                'error'   => 'internal server error',
-                'message' => $error->getMessage()
-            ], 500);
+            return ExceptionHandler::handle($error);
         }
     }
 
@@ -60,10 +58,7 @@ class AuthController extends Controller
                 'message' => 'Logout Success'
             ], 200);
         } catch (Exception $error) {
-            return response()->json([
-                'error'   => 'internal server error',
-                'message' => $error->getMessage()
-            ], 500);
+            return ExceptionHandler::handle($error);
         }
     }
 }
