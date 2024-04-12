@@ -13,8 +13,7 @@ class AllowedDomain extends Model
     protected $primaryKey = 'id';
     protected $table      = 'allowed_domains';
     protected $fillable   = [
-        'form_is',
-        'user_id',
+        'form_id',
         'domain'
     ];
 
