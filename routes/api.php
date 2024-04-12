@@ -11,11 +11,11 @@ Route::prefix('v1')->group(function () {
     # Auth Endpoints
     Route::group(['prefix' => 'auth'], function () {
         Route::post('/login', [AuthController::class, 'login'])->name('login');
-        Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('token.validate');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
     });
 
     # Forms Endpoints
-    Route::group(['prefix' => 'forms', 'middleware' => 'token.validate'], function () {
+    Route::group(['prefix' => 'forms', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [FormController::class, 'index'])->name('forms.index');
         Route::get('/{form_slug}', [FormController::class, 'detail'])->name('forms.detail');
         Route::post('/', [FormController::class, 'store'])->name('forms.store');
