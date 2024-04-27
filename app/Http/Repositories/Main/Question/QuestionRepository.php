@@ -28,11 +28,28 @@ class QuestionRepository
         }
     }
 
+    public function update(QuestionDTO $question): Question
+    {
+        try {
+            $existingQuestion = Question::findOrFail($question->id);
+
+            $existingQuestion->update([
+                'name'         => $question->name,
+                'choice_type'  => $question->choice_type,
+                'choices'      => $question->choices ?? null,
+                'is_required'  => $question->is_required
+            ]);
+
+            return $existingQuestion;
+        } catch (Throwable $error) {
+            ExceptionHandler::throw($error, 'Error while creating new question');
+        }
+    }
+
     public function delete(int $id): bool
     {
         try {
-            Question::getQuestionByColumn('id', $id)->delete();
-            return true;
+            return Question::getQuestionByColumn('id', $id)->delete();
         } catch (Throwable $error) {
             ExceptionHandler::throw($error, 'Error while deleting a question');
         }

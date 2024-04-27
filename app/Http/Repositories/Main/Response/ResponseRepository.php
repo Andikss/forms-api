@@ -23,7 +23,7 @@ class ResponseRepository implements ResponseRepositoryInterface
     public function index(string $form_slug): Collection|Form
     {
         try {
-            return Form::with(['responses.user', 'responses.answers'])
+            return Form::with(['responses.user', 'responses.answers.question'])
                 ->where('slug', $form_slug)
                 ->get();
         } catch (Throwable $error) {

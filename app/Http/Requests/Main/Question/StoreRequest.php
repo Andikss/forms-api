@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name'        => 'required|string',
-            'choice_type' => 'required|in:short answer,paragraph,date,multiple choice,dropdown,checkboxes',
+            'choice_type' => 'required|in:short answer,paragraph,datetime,multiple choice,dropdown,checkboxes',
             'choices'     => 'array|required_if:choice_type,multiple choice,dropdown,checkboxes',
             'is_required' => 'required|boolean'
         ];

@@ -48,6 +48,35 @@ class QuestionController extends Controller
         }
     }
 
+    public function update(StoreRequest $request, string $form_slug)
+    {
+        try {
+
+            $form = Form::getFormByColumn('slug', $form_slug);
+            if ($form->creator_id !== Auth::user()->id) {
+                return response()->json(['message' => 'Forbidden access'], 403);
+            }
+
+            $questionDTO = new QuestionDTO(
+                $form_slug,
+                $request->name,
+                $request->choice_type,
+                $request->is_required,
+                $request->choices,
+                $request->id
+            );
+
+            $newQuestion = $this->questionRepository->update($questionDTO);
+
+            return response()->json([
+                'message'  => 'Update question success',
+                'question' => $newQuestion
+            ], 200);
+        } catch (Throwable $error) {
+            return ExceptionHandler::handle($error);
+        }
+    }
+
     public function delete(string $form_slug, int $question_id)
     {
         try {
